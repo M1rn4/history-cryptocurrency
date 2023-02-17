@@ -2,10 +2,7 @@
 
 <div align="center">
 
-  <img src="murple_logo.png" alt="logo" width="140"  height="auto" />
-  <br/>
-
-  <h3><b>CryptoChronicles README</b></h3>
+<h3><b>CryptoChronicles README</b></h3>
 
 </div>
 
@@ -96,7 +93,6 @@ Clone this repository to your desired folder:
 Install this project using the following command: 
 
 `npm install`
-`cd history-cryptocurrency`
 
 ### Usage
 
