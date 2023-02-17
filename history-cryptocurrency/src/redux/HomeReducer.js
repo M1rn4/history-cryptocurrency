@@ -1,46 +1,29 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-export const getCoinsHome = createAsyncThunk('coins/fetchCoinsData', async () => {
-  const API_KEY = 'fd64f4965729481aeadbf019575c85f8';
-  const coins = ['ETHUSD', 'XRPUSD', 'LTCUSD', 'BCHUSD', 'BTCUSD'];
-
-  const requests = coins.map((coin) => {
-    return fetch(
-      `https://financialmodelingprep.com/api/v3/historical-price-full/crypto/${coin}?apikey=${API_KEY}`
-    )
-      .then((response) => response.json())
-      .then((data) =>
-        data.historical.map((item) => ({
-          close: item.close,
-          }))
-      );
-  });
-
-  const data = await Promise.all(requests);
-  return data.flat()[0];
+export const getCoins = createAsyncThunk('coins/fetchCoins', async () => {
+  const response = await fetch('https://api.coinstats.app/public/v1/coins');
+  const { coins } = await response.json();
+  return coins;
 });
 
 const initialState = { loading: false, coinsData: [], error: '' };
 
-const coinSliceHome = createSlice({
+const HomeReducer = createSlice({
   name: 'coins',
   initialState,
-  reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getCoinsHome.pending, (state) => {
+    builder.addCase(getCoins.pending, (state) => {
       const newState = { ...state, loading: true };
       return newState;
     });
-    builder.addCase(getCoinsHome.fulfilled, (state, action) => {
+    builder.addCase(getCoins.fulfilled, (state, action) => {
       const newState = { ...state, coinsData: action.payload, loading: false };
       return newState;
     });
-    builder.addCase(getCoinsHome.rejected, (state, action) => {
+    builder.addCase(getCoins.rejected, (state, action) => {
       const newState = { ...state, coinsData: [], error: action.error.message };
       return newState;
     });
   },
 });
-
-
-export default coinSliceHome.reducer;
+export default HomeReducer.reducer;

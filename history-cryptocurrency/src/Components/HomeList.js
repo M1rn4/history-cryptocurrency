@@ -1,29 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCoinsHome } from '../redux/HomeReducer';
+import { getCoins } from '../redux/HomeReducer';
+import banner from '../assets/banner.png';
+import '../styles/allStyles.css';
 
-const HomeList = () => {
+const CoinsList = () => {
   const dispatch = useDispatch();
-  const coinsArray = useSelector((state) => state.coins);
-  const loading = coinsArray?.loading;
-  const coins = coinsArray?.coinsData || [];
-  const [search, setSearch] = useState('');
+  const coinsArray = useSelector((state) => state.homes);
+  const { loading, coinsData: coins } = coinsArray;
+  const [search] = useState('');
 
   useEffect(() => {
     if (coins.length === 0) {
-      dispatch(getCoinsHome());
+      dispatch(getCoins());
     }
   }, [dispatch, coins.length]);
 
-  const handleChange = (e) => {
-    e.preventDefault();
-    setSearch(e.target.value);
-  };
-
-  const searchedCoin = coins.filter((coin) => coin.name.toLowerCase()
+  const searchedCoin = coins.filter((coin) => (coin.name.toLowerCase()
     .match(search.toLowerCase()) || coin.symbol.toLowerCase()
-    .match(search.toLowerCase()));
+    .match(search.toLowerCase())) && coin.rank < 11);
 
   if (loading) {
     return (
@@ -32,15 +28,8 @@ const HomeList = () => {
   }
 
   return (
-    <div className="coins-container">   
-      <div className="search-field">
-        <input
-          type="search"
-          placeholder="Search cryptocurrency"
-          onChange={handleChange}
-          value={search}
-        />
-      </div>
+    <div className="coins-container">
+      <img src={banner} alt="banner" />
       <div className="coins-list">
         {searchedCoin.map((coin) => (
           <Link to={`/details/${coin.id}`} key={coin.id}>
@@ -50,6 +39,17 @@ const HomeList = () => {
               </div>
               <div className="coin-desc">
                 <h2>{coin.name}</h2>
+                <p>
+                  Price:
+                  {' $'}
+                  {coin.price < 1000 ? coin.price.toFixed(2) : (coin.price / 1000).toFixed(1)}
+                  {coin.price > 1000 ? 'K' : ''}
+                </p>
+                <p>
+                  Rank:
+                  {' '}
+                  {coin.rank}
+                </p>
               </div>
             </div>
           </Link>
@@ -59,5 +59,4 @@ const HomeList = () => {
   );
 };
 
-export default HomeList;
-
+export default CoinsList;

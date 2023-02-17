@@ -1,50 +1,30 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-export const getCoins = createAsyncThunk('coins/fetchCoinsData', async () => {
-  const API_KEY = 'fd64f4965729481aeadbf019575c85f8';
-  const coins = ['ETHUSD', 'XRPUSD', 'LTCUSD', 'BCHUSD', 'BTCUSD'];
-
-  const requests = coins.map((coin) => {
-    return fetch(
-      `https://financialmodelingprep.com/api/v3/historical-price-full/crypto/${coin}?apikey=${API_KEY}`
-    )
-      .then((response) => response.json())
-      .then((data) =>
-        data.historical.map((item) => ({
-          close: item.close,
-          low: item.low,
-          high: item.high,
-          open: item.open,
-          volume: item.volume,
-        }))
-      );
-  });
-
-  const data = await Promise.all(requests);
-  return data.flat()[0];
+export const getCoinDetails = createAsyncThunk('details/fetchCoinDetails', async (id) => {
+  const response = await fetch(`https://api.coinstats.app/public/v1/coins/${id}`);
+  const { coin } = await response.json();
+  return coin;
 });
 
-const initialState = { loading: false, coinsData: [], error: '' };
+const initialState = { loading: false, coinDetails: [], error: '' };
 
-const coinSlice = createSlice({
-  name: 'coins',
+const DetailReducer = createSlice({
+  name: 'details',
   initialState,
-  reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getCoins.pending, (state) => {
+    builder.addCase(getCoinDetails.pending, (state) => {
       const newState = { ...state, loading: true };
       return newState;
     });
-    builder.addCase(getCoins.fulfilled, (state, action) => {
-      const newState = { ...state, coinsData: action.payload, loading: false };
+    builder.addCase(getCoinDetails.fulfilled, (state, action) => {
+      const newState = { ...state, coinDetails: action.payload, loading: false };
       return newState;
     });
-    builder.addCase(getCoins.rejected, (state, action) => {
-      const newState = { ...state, coinsData: [], error: action.error.message };
+    builder.addCase(getCoinDetails.rejected, (state, action) => {
+      const newState = { ...state, coinDetails: [], error: action.error.message };
       return newState;
     });
   },
 });
 
-
-export default coinSlice.reducer;
+export default DetailReducer.reducer;
