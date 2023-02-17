@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import store from '../redux/ConfigureStore';
 import Header from '../Components/Header';
-import HomeList from '../Components/HomeList'
+import HomeList from '../Components/HomeList';
 import Details from '../Components/Details';
 
 describe('Tests for react components', () => {
@@ -21,7 +21,7 @@ describe('Tests for react components', () => {
     expect(header).toMatchSnapshot();
   });
   it('Coin list component should render correctly', () => {
-    const {list} = render(
+    const { list } = render(
       <React.StrictMode>
         <Router>
           <Provider store={store}>
@@ -33,7 +33,7 @@ describe('Tests for react components', () => {
     expect(list).toMatchSnapshot();
   });
   it('Coin details component should render correctly', () => {
-    const {details} = render(
+    const { details } = render(
       <React.StrictMode>
         <Router>
           <Provider store={store}>

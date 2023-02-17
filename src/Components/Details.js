@@ -9,7 +9,6 @@ const CoinDetails = () => {
   const params = useParams();
   const coinsData = useSelector((state) => state.details);
   const { loading, coinDetails } = coinsData;
-  console.log(coinDetails);
 
   useEffect(() => {
     dispatch(getCoinDetails(params.id));
@@ -79,13 +78,14 @@ const CoinDetails = () => {
           </li>
           <li>
             <span>WebSite</span>
-            <span>            
+            <span>
               {coinDetails.websiteUrl}
             </span>
           </li>
           <li>
             <span>Twitter</span>
-            <span>{coinDetails.twitterUrl}
+            <span>
+              {coinDetails.twitterUrl}
             </span>
           </li>
         </ul>

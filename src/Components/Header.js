@@ -7,7 +7,7 @@ const Header = () => (
   <header>
     <div className="left">
       <Link to="/">
-      <img src={back} alt="back" />
+        <img src={back} alt="back" />
       </Link>
       <h1>CryptoChronicles</h1>
       <p>where you can view the 10 most ranked cryptocurrencies</p>

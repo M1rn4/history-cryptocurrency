@@ -1,4 +1,4 @@
-import HomeReducer from "../redux/HomeReducer";
+import HomeReducer from '../redux/HomeReducer';
 
 const mockCoinList = [
   {
