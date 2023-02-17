@@ -25,6 +25,7 @@
   - [Usage](#usage)
   - [Run tests](#run-tests)
 - [👥 Authors](#authors)
+- [🔭 Future Features](#future-features)
 - [🤝 Contributing](#contributing)
 - [⭐️ Show your support](#support)
 - [🙏 Acknowledgements](#acknowledgements)
@@ -115,11 +116,20 @@ To run tests, run the following command:
 
 ## 👥 Author <a name="authors"></a>
 
-👤 **Abeera Tahir**
+👤 **Mirna Ampuero**
 
 - GitHub: [@M1rn4](https://github.com/M1rn4)
 - Twitter: [Mirna_Ampuero](https://twitter.com/_AmpueroMirna)
 - LinkedIn: [Mirna](https://www.linkedin.com/in/mirna-ampuero-caro/)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<!-- FUTURE FEATURES -->
+
+## 🔭 Future Features <a name="future-features"></a>
+
+- **Search window can be done by price, market cap, or ranking etc.**
+- **"Show more" button feature for the cryptocurrency list can be added in the Home Page**
+- **Error page can be displayed on API failure**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
