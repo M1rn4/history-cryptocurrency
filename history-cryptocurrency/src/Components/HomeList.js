@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCoins } from '../redux/HomeReducer';
-import banner7 from '../assets/banner7.png';
+import banner from '../assets/banner.png';
 import '../styles/allStyles.css';
 
 const CoinsList = () => {
   const dispatch = useDispatch();
   const coinsArray = useSelector((state) => state.homes);
   const { loading, coinsData: coins } = coinsArray;
-  const [search, setSearch] = useState('');
+  const [search] = useState('');
 
   useEffect(() => {
     if (coins.length === 0) {
@@ -17,14 +17,9 @@ const CoinsList = () => {
     }
   }, [dispatch, coins.length]);
 
-  const handleChange = (e) => {
-    e.preventDefault();
-    setSearch(e.target.value);
-  };
-
-  const searchedCoin = coins.filter((coin) => coin.name.toLowerCase()
+  const searchedCoin = coins.filter((coin) => (coin.name.toLowerCase()
     .match(search.toLowerCase()) || coin.symbol.toLowerCase()
-    .match(search.toLowerCase()));
+    .match(search.toLowerCase())) && coin.rank < 11);
 
   if (loading) {
     return (
@@ -34,16 +29,7 @@ const CoinsList = () => {
 
   return (
     <div className="coins-container">
-      <img src={banner7} alt="banner" />
-      <div className="search-field">
-        {/* <img src={searchIcon} alt="search icon" /> */}
-        <input
-          type="search"
-          placeholder="Search cryptocurrency"
-          onChange={handleChange}
-          value={search}
-        />
-      </div>
+      <img src={banner} alt="banner" />
       <div className="coins-list">
         {searchedCoin.map((coin) => (
           <Link to={`/details/${coin.id}`} key={coin.id}>
